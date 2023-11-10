@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class InputServiceTest {
+class RefineInputServiceTest {
 
     @DisplayName("정수가 아닌 값을 입력하면 예외를 발생시킨다.")
     @ValueSource(strings = {"-3.5", "숫자", "-"})
     @ParameterizedTest
     void parseUserInputToReservationDateByIncorrectFormat(String input) {
-        assertThatThrownBy(() -> InputService.parseUserInputToReservationDate(input))
+        assertThatThrownBy(() -> RefineInputService.parseUserInputToReservationDate(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -23,7 +23,7 @@ class InputServiceTest {
     @ValueSource(strings = {"3", "5", "31"})
     @ParameterizedTest
     void parseUserInputToReservationDate(String input) {
-        assertThat(InputService.parseUserInputToReservationDate(input))
+        assertThat(RefineInputService.parseUserInputToReservationDate(input))
                 .isEqualTo(new ReservationDate(Integer.parseInt(input)));
     }
 
@@ -31,7 +31,7 @@ class InputServiceTest {
     @ValueSource(strings = {"시저 샐러드-1,초코 케이크-1", "시저샐러드1", "시저샐러드-1,,초코케이크-1", "시저샐러드-21"})
     @ParameterizedTest
     void splitUserInputForOrderByIncorrectFormat(String input) {
-        assertThatThrownBy(() -> InputService.splitUserInputForOrder(input))
+        assertThatThrownBy(() -> RefineInputService.splitUserInputForOrder(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -42,7 +42,7 @@ class InputServiceTest {
         String input = "소고기파스타-1,제로사이다-2";
 
         // when & then
-        assertThatThrownBy(() -> InputService.splitUserInputForOrder(input))
+        assertThatThrownBy(() -> RefineInputService.splitUserInputForOrder(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -54,10 +54,9 @@ class InputServiceTest {
         String[] expectedResult = {"시저샐러드", "1", "초코케이크", "1"};
 
         // when
-        String[] result = InputService.splitUserInputForOrder(input);
+        String[] result = RefineInputService.splitUserInputForOrder(input);
 
         // then
         assertThat(result).isEqualTo(expectedResult);
     }
-
 }
