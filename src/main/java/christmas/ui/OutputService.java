@@ -1,5 +1,6 @@
 package christmas.ui;
 
+import christmas.main.service.EventService;
 import christmas.menus.type.Menu;
 import java.util.Map;
 
@@ -31,6 +32,19 @@ public class OutputService {
         System.out.printf("%d원\n", totalPriceBeforeDiscount);
     }
 
+    public static void printGiveAwayContent(boolean isApplicableToGiveawayEvent) {
+        System.out.println("<증정 메뉴>");
+        if (isApplicableToGiveawayEvent) {
+            System.out.printf("%s 1개\n", Menu.CHAMPAGNE.getName());
+        }
+        if (!isApplicableToGiveawayEvent) {
+            printTextForNullCase();
+        }
+    }
+
+    public static void printTextForNullCase() {
+        System.out.println("없음");
+    }
 
 
 }

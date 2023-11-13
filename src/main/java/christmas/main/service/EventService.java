@@ -98,7 +98,7 @@ public class EventService {
         return 0;
     }
 
-    private static boolean isApplicableToGiveawayEvent(int totalPriceBeforeDiscount) {
+    public static boolean isApplicableToGiveawayEvent(int totalPriceBeforeDiscount) {
         return totalPriceBeforeDiscount >= STANDARD_PRICE_FOR_GIVEAWAY_EVENT;
     }
 }
