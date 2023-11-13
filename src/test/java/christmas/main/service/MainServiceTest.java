@@ -13,6 +13,7 @@ class MainServiceTest {
     public static final int NUMBER_OF_TAPAS = 2;
     public static final int NUMBER_OF_CHOCOLATE_CAKE = 2;
     public static final int NUMBER_OF_T_BONE_STEAK = 1;
+    public static final int MAX_DISCOUNT_AMOUNT_OF_CHRISTMAS_EVENT = 3400;
 
     @DisplayName("할인 전 총 주문 금액을 계산한다.")
     @Test
@@ -33,6 +34,32 @@ class MainServiceTest {
 
         // then
         assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @DisplayName("25일 이후의 날짜를 입력하면 크리스마스 할인 금액은 0원이다.")
+    @Test
+    void calculateDiscountAmountOfChristmasEventByOutOfPeriod() {
+        // given
+        int input = 26;
+
+        // when
+        int result = MainService.calculateDiscountAmountOfChristmasEvent(input);
+
+        // then
+        assertThat(result).isEqualTo(0);
+    }
+
+    @DisplayName("25일을 입력하면 크리스마스 할인 금액은 3,400원이다.")
+    @Test
+    void calculateDiscountAmountOfChristmasEventByLastDateOfEvent() {
+        // given
+        int input = 25;
+
+        // when
+        int result = MainService.calculateDiscountAmountOfChristmasEvent(input);
+
+        // then
+        assertThat(result).isEqualTo(MAX_DISCOUNT_AMOUNT_OF_CHRISTMAS_EVENT);
     }
 
 
