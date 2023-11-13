@@ -1,6 +1,6 @@
 package christmas.main.service;
 
-import static christmas.main.constants.Constant.*;
+import static christmas.constants.Constant.*;
 
 import christmas.menus.type.Menu;
 import christmas.menus.type.MenuType;
@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class MainService {
-
     public static int calculateTotalPriceBeforeDiscount(Map<Menu, Integer> orders) {
         int totalPrice = 0;
         for (Entry<Menu, Integer> order : orders.entrySet()) {
@@ -81,5 +80,12 @@ public class MainService {
 
     private static boolean isNotWeekday(int dayOfWeekNumber) {
         return dayOfWeekNumber >= FRIDAY_NUMBER && dayOfWeekNumber <= SATURDAY_NUMBER;
+    }
+
+    public static int checkAvailabilityForSpecialEvent(int date) {
+        if (SPECIAL_DAYS.contains(date)) {
+            return DISCOUNT_AMOUNT_OF_SPECIAL_EVENT;
+        }
+        return 0;
     }
 }

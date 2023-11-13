@@ -1,5 +1,6 @@
 package christmas.ui;
 
+import static christmas.constants.Constant.MAX_NUMBER_OF_ORDER;
 import static christmas.menus.service.MenuService.getAllMenus;
 
 import christmas.main.vo.ReservationDate;
@@ -16,8 +17,6 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 public class RefineInputService {
-
-    public static final int MAX_NUMBER_OF_ORDER = 20;
 
     public static ReservationDate parseUserInputToReservationDate(String userInputForDate) {
         return new ReservationDate(validateInputIsANumber(userInputForDate));
