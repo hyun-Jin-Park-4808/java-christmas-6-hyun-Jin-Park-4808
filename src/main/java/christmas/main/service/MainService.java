@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class MainService {
+
+
+
     public static int calculateTotalPriceBeforeDiscount(Map<Menu, Integer> orders) {
         int totalPrice = 0;
         for (Entry<Menu, Integer> order : orders.entrySet()) {
@@ -87,5 +90,16 @@ public class MainService {
             return DISCOUNT_AMOUNT_OF_SPECIAL_EVENT;
         }
         return 0;
+    }
+
+    public static int checkAvailabilityForGiveawayEvent(int totalPriceBeforeDiscount) {
+        if (isApplicableToGiveawayEvent(totalPriceBeforeDiscount)) {
+            return Menu.CHAMPAGNE.getPrice();
+        }
+        return 0;
+    }
+
+    private static boolean isApplicableToGiveawayEvent(int totalPriceBeforeDiscount) {
+        return totalPriceBeforeDiscount >= STANDARD_PRICE_FOR_GIVEAWAY_EVENT;
     }
 }
