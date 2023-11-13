@@ -1,5 +1,6 @@
 package christmas.main.service;
 
+import static christmas.main.constants.Constant.DISCOUNT_AMOUNT_PER_MENU;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.in;
 
@@ -95,7 +96,7 @@ class MainServiceTest {
         Map<Menu, Integer> input = testOrders();
 
         int expectedResult
-                = MainService.DISCOUNT_AMOUNT_PER_MENU * NUMBER_OF_CHOCOLATE_CAKE;
+                = DISCOUNT_AMOUNT_PER_MENU * NUMBER_OF_CHOCOLATE_CAKE;
 
         // when
         int result = MainService.calculateDiscountAmountOfWeekdayEvent(date, input);
@@ -126,7 +127,7 @@ class MainServiceTest {
         Map<Menu, Integer> input = testOrders();
 
         int expectedResult
-                = MainService.DISCOUNT_AMOUNT_PER_MENU * NUMBER_OF_T_BONE_STEAK;
+                = DISCOUNT_AMOUNT_PER_MENU * NUMBER_OF_T_BONE_STEAK;
 
         // when
         int result = MainService.calculateDiscountAmountOfWeekendEvent(date, input);

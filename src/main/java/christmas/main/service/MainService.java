@@ -1,5 +1,7 @@
 package christmas.main.service;
 
+import static christmas.main.constants.Constant.*;
+
 import christmas.menus.type.Menu;
 import christmas.menus.type.MenuType;
 import java.time.DayOfWeek;
@@ -8,16 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class MainService {
-
-    public static final int MIN_PRICE_FOR_EVENT = 10000;
-    public static final int LAST_DATE_OF_CHRISTMAS_EVENT = 25;
-    public static final int MIN_DISCOUNT_AMOUNT_OF_CHRISTMAS_EVENT = 1000;
-    public static final int ADDED_DISTCOUNT_AMOUNT_OF_CHRISTMAS_EVENT = 100;
-    public static final int YEAR_FOR_EVENT = 2023;
-    public static final int MONTH_FOR_EVNET = 12;
-    public static final int FRIDATY_NUMBER = 5;
-    public static final int SATURDAY_NUMBER = 6;
-    public static final int DISCOUNT_AMOUNT_PER_MENU = 2023;
 
     public static int calculateTotalPriceBeforeDiscount(Map<Menu, Integer> orders) {
         int totalPrice = 0;
@@ -45,7 +37,7 @@ public class MainService {
     }
 
     private static int calculateAddedDiscountAmountOfChristmasEvent(int date) {
-        return calculatePassedDaysSinceThe1st(date) * ADDED_DISTCOUNT_AMOUNT_OF_CHRISTMAS_EVENT;
+        return calculatePassedDaysSinceThe1st(date) * ADDED_DISCOUNT_AMOUNT_OF_CHRISTMAS_EVENT;
     }
 
     private static int calculatePassedDaysSinceThe1st(int date) {
@@ -78,7 +70,7 @@ public class MainService {
     }
 
     private static boolean isWeekday(int date) {
-        LocalDate localDate = LocalDate.of(YEAR_FOR_EVENT, MONTH_FOR_EVNET, date);
+        LocalDate localDate = LocalDate.of(YEAR_FOR_EVENT, MONTH_FOR_EVENT, date);
         DayOfWeek dayOfWeek = localDate.getDayOfWeek();
         int dayOfWeekNumber = dayOfWeek.getValue();
         if (isNotWeekday(dayOfWeekNumber)) {
@@ -88,6 +80,6 @@ public class MainService {
     }
 
     private static boolean isNotWeekday(int dayOfWeekNumber) {
-        return dayOfWeekNumber >= FRIDATY_NUMBER && dayOfWeekNumber <= SATURDAY_NUMBER;
+        return dayOfWeekNumber >= FRIDAY_NUMBER && dayOfWeekNumber <= SATURDAY_NUMBER;
     }
 }
