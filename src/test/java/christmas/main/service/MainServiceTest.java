@@ -1,6 +1,7 @@
 package christmas.main.service;
 
-import static christmas.main.constants.Constant.DISCOUNT_AMOUNT_PER_MENU;
+import static christmas.constants.Constant.DISCOUNT_AMOUNT_OF_SPECIAL_EVENT;
+import static christmas.constants.Constant.DISCOUNT_AMOUNT_PER_MENU;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.in;
 
@@ -9,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class MainServiceTest {
 
@@ -136,4 +139,21 @@ class MainServiceTest {
         assertThat(result).isEqualTo(expectedResult);
     }
 
+    @DisplayName("입력한 날짜가 특별 할인에 해당하는 날짜가 아니면 0원을 반환한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"4", "12", "19"})
+    void checkAvailabilityForSpecialEventByNotSpecialDate(Integer input) {
+
+        // when & then
+        assertThat(MainService.checkAvailabilityForSpecialEvent(input)).isEqualTo(0);
+    }
+
+    @DisplayName("입력한 날짜가 특별 할인에 해당하는 날짜이면 1000원을 반환한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"3", "10", "17", "24", "25", "31"})
+    void checkAvailabilityForSpecialEvent(Integer input) {
+
+        // when & then
+        assertThat(MainService.checkAvailabilityForSpecialEvent(input)).isEqualTo(DISCOUNT_AMOUNT_OF_SPECIAL_EVENT);
+    }
 }
