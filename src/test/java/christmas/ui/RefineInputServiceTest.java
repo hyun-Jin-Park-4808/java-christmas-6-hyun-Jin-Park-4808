@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.main.vo.ReservationDate;
+import christmas.menus.type.Menu;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,7 +49,7 @@ class RefineInputServiceTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("형식에 맞는 메뉴와 개수를 입력하면 정상적으로 메뉴를 저장한다.")
+    @DisplayName("형식에 맞는 메뉴와 개수를 입력하면 정상적으로 메뉴를 String[] 타입으로 저장한다.")
     @Test
     void splitUserInputForOrder() {
         // given
@@ -55,6 +58,60 @@ class RefineInputServiceTest {
 
         // when
         String[] result = RefineInputService.splitUserInputForOrder(input);
+
+        // then
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @DisplayName("중복 메뉴를 입력하면 예외를 발생시킨다.")
+    @Test
+    void saveOrdersByDuplicatedFoodTypeAndQuantity() {
+        // given
+        String[] input = {"시저샐러드", "2", "시저샐러드", "3", "티본스테이크", "1"};
+        Map<Menu, Integer> expectedResult = new HashMap<>();
+
+        // when & then
+        assertThatThrownBy(() -> RefineInputService.saveOrdersByFoodTypeAndQuantity(input))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("음료 메뉴만 입력하면 예외를 발생시킨다.")
+    @Test
+    void saveOrdersConsistingOfDrinkMenuOnly() {
+        // given
+        String[] input = {"레드와인", "2", "제로콜라", "3"};
+        Map<Menu, Integer> expectedResult = new HashMap<>();
+
+        // when & then
+        assertThatThrownBy(() -> RefineInputService.saveOrdersByFoodTypeAndQuantity(input))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("총 주문 수량이 20개가 넘으면 예외를 발생시킨다.")
+    @Test
+    void saveOrdersMoreThanTwenty() {
+        // given
+        String[] input = {"시저샐러드", "15", "제로콜라", "7"};
+        Map<Menu, Integer> expectedResult = new HashMap<>();
+
+        // when & then
+        assertThatThrownBy(() -> RefineInputService.saveOrdersByFoodTypeAndQuantity(input))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("형식에 맞는 메뉴와 개수를 입력하면 정상적으로 메뉴를 Map<Menu, Integer> 형태로 저장한다.")
+    @Test
+    void saveOrdersByFoodTypeAndQuantity() {
+        // given
+        String[] input = {"시저샐러드", "2", "초코케이크", "3", "티본스테이크", "1"};
+        Map<Menu, Integer> expectedResult = new HashMap<>();
+
+        expectedResult.put(Menu.CAESAR_SALAD, 2);
+        expectedResult.put(Menu.CHOCOLATE_CAKE, 3);
+        expectedResult.put(Menu.T_BONE_STEAK, 1);
+
+        // when
+        Map<Menu, Integer> result = RefineInputService.saveOrdersByFoodTypeAndQuantity(input);
 
         // then
         assertThat(result).isEqualTo(expectedResult);
