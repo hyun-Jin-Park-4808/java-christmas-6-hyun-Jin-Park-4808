@@ -40,5 +40,7 @@ public class ResultService {
         return eventContents == null;
     }
 
-
+    public static int calculateAmountOfPayment(int totalPriceBeforeDiscount, int totalDiscountedAmount) {
+        return totalPriceBeforeDiscount - totalDiscountedAmount;
+    }
 }
