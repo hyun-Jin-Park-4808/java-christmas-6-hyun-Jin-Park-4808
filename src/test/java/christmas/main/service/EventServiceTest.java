@@ -3,10 +3,8 @@ package christmas.main.service;
 import static christmas.constants.Constant.DISCOUNT_AMOUNT_OF_SPECIAL_EVENT;
 import static christmas.constants.Constant.DISCOUNT_AMOUNT_PER_MENU;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 
 import christmas.menus.type.Menu;
-import christmas.menus.type.MenuType;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class MainServiceTest {
+class EventServiceTest {
 
     public static final int NUMBER_OF_TAPAS = 2;
     public static final int NUMBER_OF_CHOCOLATE_CAKE = 2;
@@ -22,7 +20,7 @@ class MainServiceTest {
     public static final int NUMBER_OF_RED_WINE = 5;
     public static final int MAX_DISCOUNT_AMOUNT_OF_CHRISTMAS_EVENT = 3400;
 
-    private static Map<Menu, Integer> testOrders() {
+    public static Map<Menu, Integer> testOrders() {
         Map<Menu, Integer> input = new HashMap<>();
 
         input.put(Menu.TAPAS, NUMBER_OF_TAPAS);
@@ -44,7 +42,7 @@ class MainServiceTest {
                 + Menu.RED_WINE.getPrice() * NUMBER_OF_RED_WINE;
 
         // when
-        int result = MainService.calculateTotalPriceBeforeDiscount(input);
+        int result = EventService.calculateTotalPriceBeforeDiscount(input);
 
         // then
         assertThat(result).isEqualTo(expectedResult);
@@ -59,7 +57,7 @@ class MainServiceTest {
         int input = 26;
 
         // when
-        int result = MainService.calculateDiscountAmountOfChristmasEvent(input);
+        int result = EventService.calculateDiscountAmountOfChristmasEvent(input);
 
         // then
         assertThat(result).isEqualTo(0);
@@ -72,7 +70,7 @@ class MainServiceTest {
         int input = 25;
 
         // when
-        int result = MainService.calculateDiscountAmountOfChristmasEvent(input);
+        int result = EventService.calculateDiscountAmountOfChristmasEvent(input);
 
         // then
         assertThat(result).isEqualTo(MAX_DISCOUNT_AMOUNT_OF_CHRISTMAS_EVENT);
@@ -86,7 +84,7 @@ class MainServiceTest {
         Map<Menu, Integer> input = testOrders();
 
         // when
-        int result = MainService.calculateDiscountAmountOfWeekdayEvent(date, input);
+        int result = EventService.calculateDiscountAmountOfWeekdayEvent(date, input);
 
         // then
         assertThat(result).isEqualTo(0);
@@ -103,7 +101,7 @@ class MainServiceTest {
                 = DISCOUNT_AMOUNT_PER_MENU * NUMBER_OF_CHOCOLATE_CAKE;
 
         // when
-        int result = MainService.calculateDiscountAmountOfWeekdayEvent(date, input);
+        int result = EventService.calculateDiscountAmountOfWeekdayEvent(date, input);
 
         // then
         assertThat(result).isEqualTo(expectedResult);
@@ -117,7 +115,7 @@ class MainServiceTest {
         Map<Menu, Integer> input = testOrders();
 
         // when
-        int result = MainService.calculateDiscountAmountOfWeekendEvent(date, input);
+        int result = EventService.calculateDiscountAmountOfWeekendEvent(date, input);
 
         // then
         assertThat(result).isEqualTo(0);
@@ -134,7 +132,7 @@ class MainServiceTest {
                 = DISCOUNT_AMOUNT_PER_MENU * NUMBER_OF_T_BONE_STEAK;
 
         // when
-        int result = MainService.calculateDiscountAmountOfWeekendEvent(date, input);
+        int result = EventService.calculateDiscountAmountOfWeekendEvent(date, input);
 
         // then
         assertThat(result).isEqualTo(expectedResult);
@@ -146,7 +144,7 @@ class MainServiceTest {
     void checkAvailabilityForSpecialEventByNotSpecialDate(Integer input) {
 
         // when & then
-        assertThat(MainService.checkAvailabilityForSpecialEvent(input)).isEqualTo(0);
+        assertThat(EventService.checkAvailabilityForSpecialEvent(input)).isEqualTo(0);
     }
 
     @DisplayName("입력한 날짜가 특별 할인에 해당하는 날짜이면 1000원을 반환한다.")
@@ -155,7 +153,7 @@ class MainServiceTest {
     void checkAvailabilityForSpecialEvent(Integer input) {
 
         // when & then
-        assertThat(MainService.checkAvailabilityForSpecialEvent(input)).isEqualTo(DISCOUNT_AMOUNT_OF_SPECIAL_EVENT);
+        assertThat(EventService.checkAvailabilityForSpecialEvent(input)).isEqualTo(DISCOUNT_AMOUNT_OF_SPECIAL_EVENT);
     }
 
     @DisplayName("할인 전 총주문 금액이 12만원 이상이 안 되면 증정 이벤트를 받지 못한다.")
@@ -165,7 +163,7 @@ class MainServiceTest {
         int totalPriceBeforeDiscount = 100000;
 
         // when & then
-        assertThat(MainService.checkAvailabilityForGiveawayEvent(totalPriceBeforeDiscount)).isEqualTo(0);
+        assertThat(EventService.checkAvailabilityForGiveawayEvent(totalPriceBeforeDiscount)).isEqualTo(0);
     }
 
     @DisplayName("할인 전 총주문 금액이 12만원 이상이면 샴페인에 해당하는 가격을 혜택으로 받는다.")
@@ -175,7 +173,7 @@ class MainServiceTest {
         int totalPriceBeforeDiscount = 120000;
 
         // when & then
-        assertThat(MainService.checkAvailabilityForGiveawayEvent(totalPriceBeforeDiscount))
+        assertThat(EventService.checkAvailabilityForGiveawayEvent(totalPriceBeforeDiscount))
                 .isEqualTo(Menu.CHAMPAGNE.getPrice());
     }
 

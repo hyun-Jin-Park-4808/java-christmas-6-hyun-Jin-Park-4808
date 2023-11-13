@@ -3,7 +3,7 @@ package christmas.ui;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.main.service.MainService;
+import christmas.main.service.EventService;
 import christmas.main.vo.ReservationDate;
 import christmas.menus.type.Menu;
 import java.util.HashMap;
@@ -125,7 +125,7 @@ class RefineInputServiceTest {
         int input = 9000;
 
         // when & then
-        assertThat(MainService.isTheEventApplied(input)).isFalse();
+        assertThat(EventService.isTheEventApplied(input)).isFalse();
     }
 
     @DisplayName("총 주문 금액이 만 원 이상이면 이벤트 적용 대상 금액이다.")
@@ -134,7 +134,7 @@ class RefineInputServiceTest {
     void isTheEventApplied_True_Case(Integer input) {
 
         // when & then
-        assertThat(MainService.isTheEventApplied(input)).isTrue();
+        assertThat(EventService.isTheEventApplied(input)).isTrue();
     }
 
 }
