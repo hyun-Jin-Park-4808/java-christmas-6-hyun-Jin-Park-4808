@@ -77,7 +77,7 @@ class MainServiceTest {
     @Test
     void calculateDiscountAmountOfWeekdayEventByWeekend() {
         // given
-        int date = 8; // 목요일
+        int date = 8; // 금요일
         Map<Menu, Integer> input = testOrders();
 
         // when
@@ -104,5 +104,35 @@ class MainServiceTest {
         assertThat(result).isEqualTo(expectedResult);
     }
 
+    @DisplayName("입력한 일자가 주말이 아니면 주말 할인 금액이 0원으로 반환된다.")
+    @Test
+    void calculateDiscountAmountOfWeekendEventByWeekday() {
+        // given
+        int date = 7; // 목요일
+        Map<Menu, Integer> input = testOrders();
+
+        // when
+        int result = MainService.calculateDiscountAmountOfWeekendEvent(date, input);
+
+        // then
+        assertThat(result).isEqualTo(0);
+    }
+
+    @DisplayName("입력한 일자가 주말이면 주말 할인 금액이 적용된다.")
+    @Test
+    void calculateDiscountAmountOfWeekendEvent() {
+        // given
+        int date = 8; // 금요일
+        Map<Menu, Integer> input = testOrders();
+
+        int expectedResult
+                = MainService.DISCOUNT_AMOUNT_PER_MENU * NUMBER_OF_T_BONE_STEAK;
+
+        // when
+        int result = MainService.calculateDiscountAmountOfWeekendEvent(date, input);
+
+        // then
+        assertThat(result).isEqualTo(expectedResult);
+    }
 
 }
