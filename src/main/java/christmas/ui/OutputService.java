@@ -1,5 +1,8 @@
 package christmas.ui;
 
+import christmas.menus.type.Menu;
+import java.util.Map;
+
 public class OutputService {
     public static void printTextForIntroduction() {
         System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
@@ -15,6 +18,13 @@ public class OutputService {
 
     public static void printTextForEventContents(int date) {
         System.out.printf("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n", date);
+    }
+
+    public static void printOrders(Map<Menu, Integer> orders) {
+        System.out.println("<주문 메뉴>");
+        for (Map.Entry<Menu, Integer> order : orders.entrySet()) {
+            System.out.printf("%s %d개", order.getKey().getName(), order.getValue());
+        }
     }
 
 

@@ -31,6 +31,10 @@ public enum Menu {
         return this.price;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public static List<String> namesOfMenus() {
         List<String> namesOfMenus = new ArrayList<>();
         namesOfMenus.add(BUTTON_MUSHROOM_SOUP.name);
