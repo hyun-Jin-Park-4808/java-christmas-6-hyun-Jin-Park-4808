@@ -126,4 +126,16 @@ class ResultServiceTest {
     void calculateTotalDiscountedAmountByNull() {
         assertThat(ResultService.calculateTotalDiscountedAmount(null)).isEqualTo(0);
     }
+
+    @DisplayName("할인 후 예상 결제 금액을 계산한다.")
+    @Test
+    void calculateAmountOfPayment() {
+        // given
+        int totalPriceBeforeDiscount = 150000;
+        int totalDiscountAmount = 5000;
+        int expectedResult = totalPriceBeforeDiscount - totalDiscountAmount;
+        assertThat(ResultService
+                .calculateAmountOfPayment(totalPriceBeforeDiscount, totalDiscountAmount))
+                .isEqualTo(expectedResult);
+    }
 }
