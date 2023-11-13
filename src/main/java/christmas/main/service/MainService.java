@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class MainService {
 
+    public static final int MIN_PRICE_FOR_EVENT = 10000;
+
     public static int calculateTotalPriceBeforeDiscount(Map<Menu, Integer> orders) {
         int totalPrice = 0;
         for (Map.Entry<Menu, Integer> order : orders.entrySet()) {
@@ -13,5 +15,12 @@ public class MainService {
             totalPrice += priceOfOrdersPerMenu * numberOfOrdersPerMenu;
         }
         return totalPrice;
+    }
+
+    public static boolean isTheEventApplied(int totalPrice) {
+        if (totalPrice >= MIN_PRICE_FOR_EVENT) {
+            return true;
+        }
+        return false;
     }
 }
