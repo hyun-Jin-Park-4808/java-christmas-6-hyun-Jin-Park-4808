@@ -65,6 +65,12 @@ public class OutputService {
         System.out.printf("-%d원", totalDiscountedAmount);
     }
 
+    public static void printAmountOfPayment(int amountOfPayment) {
+        System.out.printf("%d원", amountOfPayment);
+    }
+
+
+
 
 
 }
