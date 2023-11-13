@@ -1,6 +1,7 @@
 package christmas.ui;
 
 import christmas.main.service.EventService;
+import christmas.main.type.EventType;
 import christmas.menus.type.Menu;
 import java.util.Map;
 
@@ -34,17 +35,29 @@ public class OutputService {
 
     public static void printGiveAwayContent(boolean isApplicableToGiveawayEvent) {
         System.out.println("<증정 메뉴>");
-        if (isApplicableToGiveawayEvent) {
-            System.out.printf("%s 1개\n", Menu.CHAMPAGNE.getName());
-        }
         if (!isApplicableToGiveawayEvent) {
             printTextForNullCase();
+            return;
         }
+        System.out.printf("%s 1개\n", Menu.CHAMPAGNE.getName());
     }
 
     public static void printTextForNullCase() {
         System.out.println("없음");
     }
+
+    public static void printEventContents(Map<EventType, Integer> eventContents) {
+        System.out.println(" <혜택 내역>");
+        if (eventContents == null) {
+            printTextForNullCase();
+            return;
+        }
+        for (Map.Entry<EventType, Integer> eventContent : eventContents.entrySet()) {
+            System.out.printf("%s:-%d원", eventContent.getKey().getEventName(), eventContent.getValue());
+        }
+    }
+
+
 
 
 }
