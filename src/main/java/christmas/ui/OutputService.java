@@ -1,6 +1,7 @@
 package christmas.ui;
 
 import christmas.main.service.EventService;
+import christmas.main.type.BadgeType;
 import christmas.main.type.EventType;
 import christmas.menus.type.Menu;
 import java.util.Map;
@@ -69,8 +70,10 @@ public class OutputService {
         System.out.printf("%d원", amountOfPayment);
     }
 
-
-
-
-
+    public static void printBadge(BadgeType badgeType) {
+        if (badgeType == null) {
+            printTextForNullCase();
+        }
+        System.out.printf("%s", badgeType.getBadgeName());
+    }
 }
