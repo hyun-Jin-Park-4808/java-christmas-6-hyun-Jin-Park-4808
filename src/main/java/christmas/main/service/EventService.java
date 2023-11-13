@@ -9,8 +9,7 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class MainService {
-
+public class EventService {
 
 
     public static int calculateTotalPriceBeforeDiscount(Map<Menu, Integer> orders) {
@@ -23,8 +22,8 @@ public class MainService {
         return totalPrice;
     }
 
-    public static boolean isTheEventApplied(int totalPrice) {
-        if (totalPrice >= MIN_PRICE_FOR_EVENT) {
+    public static boolean isTheEventApplied(int totalPriceBeforeDiscount) {
+        if (totalPriceBeforeDiscount >= MIN_PRICE_FOR_EVENT) {
             return true;
         }
         return false;
