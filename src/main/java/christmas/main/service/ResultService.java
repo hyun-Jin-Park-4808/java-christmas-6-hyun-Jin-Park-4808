@@ -29,4 +29,16 @@ public class ResultService {
         }
     }
 
+    public static int calculateTotalDiscountedAmount(Map<EventType, Integer> eventContents) {
+        if (isNull(eventContents)) {
+            return 0;
+        }
+        return eventContents.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    private static boolean isNull(Map<EventType, Integer> eventContents) {
+        return eventContents == null;
+    }
+
+
 }
