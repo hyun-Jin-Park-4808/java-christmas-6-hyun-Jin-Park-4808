@@ -2,6 +2,7 @@ package christmas.main.service;
 
 import static christmas.constants.Constant.*;
 
+import christmas.main.vo.ReservationDate;
 import christmas.menus.type.Menu;
 import christmas.menus.type.MenuType;
 import java.time.DayOfWeek;
@@ -29,34 +30,30 @@ public class EventService {
         return false;
     }
 
-    public static int calculateDiscountAmountOfChristmasEvent(int date) {
-        if (isNotDuringTheEventPeriod(date)) {
+    public static int calculateDiscountAmountOfChristmasEvent(ReservationDate date) {
+        if (date.isNotDuringTheEventPeriod()) {
             return 0;
         }
         return MIN_DISCOUNT_AMOUNT_OF_CHRISTMAS_EVENT
                 + calculateAddedDiscountAmountOfChristmasEvent(date);
     }
 
-    private static int calculateAddedDiscountAmountOfChristmasEvent(int date) {
+    private static int calculateAddedDiscountAmountOfChristmasEvent(ReservationDate date) {
         return calculatePassedDaysSinceThe1st(date) * ADDED_DISCOUNT_AMOUNT_OF_CHRISTMAS_EVENT;
     }
 
-    private static int calculatePassedDaysSinceThe1st(int date) {
-        return date - 1;
+    private static int calculatePassedDaysSinceThe1st(ReservationDate date) {
+        return date.getReservationDate() - 1;
     }
 
-    private static boolean isNotDuringTheEventPeriod(int date) {
-        return date > LAST_DATE_OF_CHRISTMAS_EVENT;
-    }
-
-    public static int calculateDiscountAmountOfWeekdayEvent(int date, Map<Menu, Integer> orders) {
+    public static int calculateDiscountAmountOfWeekdayEvent(ReservationDate date, Map<Menu, Integer> orders) {
         if (!isWeekday(date)) {
             return 0;
         }
         return getNumberOfMenu(orders, MenuType.DESSERT) * DISCOUNT_AMOUNT_PER_MENU;
     }
 
-    public static int calculateDiscountAmountOfWeekendEvent(int date, Map<Menu, Integer> orders) {
+    public static int calculateDiscountAmountOfWeekendEvent(ReservationDate date, Map<Menu, Integer> orders) {
         if (isWeekday(date)) {
             return 0;
         }
@@ -70,8 +67,8 @@ public class EventService {
                 .sum();
     }
 
-    private static boolean isWeekday(int date) {
-        LocalDate localDate = LocalDate.of(YEAR_FOR_EVENT, MONTH_FOR_EVENT, date);
+    private static boolean isWeekday(ReservationDate date) {
+        LocalDate localDate = LocalDate.of(YEAR_FOR_EVENT, MONTH_FOR_EVENT, date.getReservationDate());
         DayOfWeek dayOfWeek = localDate.getDayOfWeek();
         int dayOfWeekNumber = dayOfWeek.getValue();
         if (isNotWeekday(dayOfWeekNumber)) {
@@ -84,8 +81,8 @@ public class EventService {
         return dayOfWeekNumber >= FRIDAY_NUMBER && dayOfWeekNumber <= SATURDAY_NUMBER;
     }
 
-    public static int checkAvailabilityForSpecialEvent(int date) {
-        if (SPECIAL_DAYS.contains(date)) {
+    public static int checkAvailabilityForSpecialEvent(ReservationDate date) {
+        if (date.isSpecialDay()) {
             return DISCOUNT_AMOUNT_OF_SPECIAL_EVENT;
         }
         return 0;

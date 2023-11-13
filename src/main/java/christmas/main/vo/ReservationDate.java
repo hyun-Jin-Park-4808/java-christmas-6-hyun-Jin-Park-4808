@@ -1,5 +1,8 @@
 package christmas.main.vo;
 
+import static christmas.constants.Constant.LAST_DATE_OF_CHRISTMAS_EVENT;
+import static christmas.constants.Constant.SPECIAL_DAYS;
+
 import christmas.ui.error.ErrorMessage;
 import java.util.Objects;
 
@@ -11,6 +14,10 @@ public class ReservationDate {
     public ReservationDate(int reservationDate) {
         validateRangeOfDate(reservationDate);
         this.reservationDate = reservationDate;
+    }
+
+    public int getReservationDate() {
+        return this.reservationDate;
     }
 
     private void validateRangeOfDate(int date) {
@@ -38,6 +45,14 @@ public class ReservationDate {
     @Override
     public int hashCode() {
         return Objects.hash(reservationDate);
+    }
+
+    public boolean isNotDuringTheEventPeriod() {
+        return this.reservationDate > LAST_DATE_OF_CHRISTMAS_EVENT;
+    }
+
+    public boolean isSpecialDay() {
+        return SPECIAL_DAYS.contains(this.reservationDate);
     }
 
 }

@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.main.type.BadgeType;
 import christmas.main.type.EventType;
+import christmas.main.vo.ReservationDate;
 import christmas.menus.type.Menu;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,7 @@ class ResultServiceTest {
         // given
         Map<Menu, Integer> orders = EventServiceTest.testOrders();
         int totalPriceBeforeDiscount = EventService.calculateTotalPriceBeforeDiscount(orders);
-        int date = 7; // 목요일(평일)
+        ReservationDate date = new ReservationDate(7); // 목요일(평일)
         Map<EventType, Integer> expectedResult = new HashMap<>();
         expectedResult.put(EventType.CHRISTMAS_D_DAY,
                 EventService.calculateDiscountAmountOfChristmasEvent(date));
@@ -44,7 +45,7 @@ class ResultServiceTest {
         // given
         Map<Menu, Integer> orders = EventServiceTest.testOrders();
         int totalPriceBeforeDiscount = EventService.calculateTotalPriceBeforeDiscount(orders);
-        int date = 8; // 금요일(주말)
+        ReservationDate date = new ReservationDate(8); // 금요일(주말)
         Map<EventType, Integer> expectedResult = new HashMap<>();
         expectedResult.put(EventType.CHRISTMAS_D_DAY,
                 EventService.calculateDiscountAmountOfChristmasEvent(date));
@@ -67,7 +68,7 @@ class ResultServiceTest {
         // given
         Map<Menu, Integer> orders = EventServiceTest.testOrders();
         int totalPriceBeforeDiscount = EventService.calculateTotalPriceBeforeDiscount(orders);
-        int date = 3; // 일요일(평일), 특별 이벤트 적용 날짜
+        ReservationDate date = new ReservationDate(3); // 일요일(평일), 특별 이벤트 적용 날짜
         Map<EventType, Integer> expectedResult = new HashMap<>();
         expectedResult.put(EventType.CHRISTMAS_D_DAY,
                 EventService.calculateDiscountAmountOfChristmasEvent(date));
@@ -93,7 +94,7 @@ class ResultServiceTest {
         Map<Menu, Integer> orders = new HashMap<>();
         orders.put(Menu.ICE_CREAM, 1);
         int totalPriceBeforeDiscount = EventService.calculateTotalPriceBeforeDiscount(orders);
-        int date = 3;
+        ReservationDate date = new ReservationDate(3);
 
         // when
         Map<EventType, Integer> eventContents
@@ -110,7 +111,7 @@ class ResultServiceTest {
         // given
         Map<Menu, Integer> orders = EventServiceTest.testOrders();
         int totalPriceBeforeDiscount = EventService.calculateTotalPriceBeforeDiscount(orders);
-        int date = 3; // 일요일(평일), 특별 이벤트 적용 날짜
+        ReservationDate date = new ReservationDate(3); // 일요일(평일), 특별 이벤트 적용 날짜
         Map<EventType, Integer> eventContents
                 = ResultService.saveEventContents(totalPriceBeforeDiscount, date, orders);
 

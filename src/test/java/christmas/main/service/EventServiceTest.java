@@ -4,6 +4,7 @@ import static christmas.constants.Constant.DISCOUNT_AMOUNT_OF_SPECIAL_EVENT;
 import static christmas.constants.Constant.DISCOUNT_AMOUNT_PER_MENU;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.main.vo.ReservationDate;
 import christmas.menus.type.Menu;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,15 +50,14 @@ class EventServiceTest {
     }
 
 
-
     @DisplayName("25일 이후의 날짜를 입력하면 크리스마스 할인 금액은 0원이다.")
     @Test
     void calculateDiscountAmountOfChristmasEventByOutOfPeriod() {
         // given
-        int input = 26;
+        ReservationDate date = new ReservationDate(26);
 
         // when
-        int result = EventService.calculateDiscountAmountOfChristmasEvent(input);
+        int result = EventService.calculateDiscountAmountOfChristmasEvent(date);
 
         // then
         assertThat(result).isEqualTo(0);
@@ -67,10 +67,10 @@ class EventServiceTest {
     @Test
     void calculateDiscountAmountOfChristmasEventByLastDateOfEvent() {
         // given
-        int input = 25;
+        ReservationDate date = new ReservationDate(25);
 
         // when
-        int result = EventService.calculateDiscountAmountOfChristmasEvent(input);
+        int result = EventService.calculateDiscountAmountOfChristmasEvent(date);
 
         // then
         assertThat(result).isEqualTo(MAX_DISCOUNT_AMOUNT_OF_CHRISTMAS_EVENT);
@@ -80,7 +80,7 @@ class EventServiceTest {
     @Test
     void calculateDiscountAmountOfWeekdayEventByWeekend() {
         // given
-        int date = 8; // 금요일
+        ReservationDate date = new ReservationDate(8); // 금요일
         Map<Menu, Integer> input = testOrders();
 
         // when
@@ -94,7 +94,7 @@ class EventServiceTest {
     @Test
     void calculateDiscountAmountOfWeekdayEvent() {
         // given
-        int date = 7; // 목요일
+        ReservationDate date = new ReservationDate(7); // 목요일
         Map<Menu, Integer> input = testOrders();
 
         int expectedResult
@@ -111,7 +111,8 @@ class EventServiceTest {
     @Test
     void calculateDiscountAmountOfWeekendEventByWeekday() {
         // given
-        int date = 7; // 목요일
+        ReservationDate date = new ReservationDate(7);
+        ; // 목요일
         Map<Menu, Integer> input = testOrders();
 
         // when
@@ -125,7 +126,8 @@ class EventServiceTest {
     @Test
     void calculateDiscountAmountOfWeekendEvent() {
         // given
-        int date = 8; // 금요일
+        ReservationDate date = new ReservationDate(8);
+        ; // 금요일
         Map<Menu, Integer> input = testOrders();
 
         int expectedResult
@@ -144,7 +146,7 @@ class EventServiceTest {
     void checkAvailabilityForSpecialEventByNotSpecialDate(Integer input) {
 
         // when & then
-        assertThat(EventService.checkAvailabilityForSpecialEvent(input)).isEqualTo(0);
+        assertThat(EventService.checkAvailabilityForSpecialEvent(new ReservationDate(input))).isEqualTo(0);
     }
 
     @DisplayName("입력한 날짜가 특별 할인에 해당하는 날짜이면 1000원을 반환한다.")
@@ -153,7 +155,8 @@ class EventServiceTest {
     void checkAvailabilityForSpecialEvent(Integer input) {
 
         // when & then
-        assertThat(EventService.checkAvailabilityForSpecialEvent(input)).isEqualTo(DISCOUNT_AMOUNT_OF_SPECIAL_EVENT);
+        assertThat(EventService.checkAvailabilityForSpecialEvent(new ReservationDate(input))).isEqualTo(
+                DISCOUNT_AMOUNT_OF_SPECIAL_EVENT);
     }
 
     @DisplayName("할인 전 총주문 금액이 12만원 이상이 안 되면 증정 이벤트를 받지 못한다.")

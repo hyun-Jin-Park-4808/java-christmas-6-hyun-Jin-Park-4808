@@ -55,7 +55,7 @@ public class RefineInputService {
     }
 
     private static void validateFormatOfInputForOrder(String userInputForOrder) {
-        String formatOfOrder = "^[가-힣]+-[1-20]$";
+        String formatOfOrder = "^[가-힣]+-\\d+$";
         for (String menu : userInputForOrder.split(",")) {
             if (!Pattern.matches(formatOfOrder, menu)) {
                 throw new IllegalArgumentException(ErrorMessage.INCORRECT_FORMAT_OF_ORDER_EXCEPTION);
@@ -69,7 +69,7 @@ public class RefineInputService {
 
         for (int i = 0; i < menus.length / 2; i++) {
             Menu menu = Menu.compareSameName(getMenu(menus, i));
-                orders.put(menu, Integer.parseInt(getNumberOfMenu(menus, i)));
+            orders.put(menu, Integer.parseInt(getNumberOfMenu(menus, i)));
         }
         validateNumbersExceptForDrink(orders);
         validateTotalCountsOfOrders(orders);

@@ -7,6 +7,7 @@ import static christmas.main.service.EventService.*;
 
 import christmas.main.type.BadgeType;
 import christmas.main.type.EventType;
+import christmas.main.vo.ReservationDate;
 import christmas.menus.type.Menu;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +15,8 @@ import java.util.Map;
 public class ResultService {
 
 
-
     public static Map<EventType, Integer> saveEventContents(
-            int totalPriceBeforeDiscount, int date, Map<Menu, Integer> orders) {
+            int totalPriceBeforeDiscount, ReservationDate date, Map<Menu, Integer> orders) {
         Map<EventType, Integer> eventContents = new HashMap<>();
         if (!EventService.isTheEventApplied(totalPriceBeforeDiscount)) {
             return null;
@@ -26,11 +26,12 @@ public class ResultService {
         putEventContent(EventType.WEEKEND, calculateDiscountAmountOfWeekendEvent(date, orders), eventContents);
         putEventContent(EventType.SPECIAL_DAY, checkAvailabilityForSpecialEvent(date), eventContents);
         putEventContent(EventType.GIVEAWAY, checkAvailabilityForGiveawayEvent(totalPriceBeforeDiscount), eventContents);
-        
+
         return eventContents;
     }
 
-    private static void putEventContent(EventType eventType, int discountAmount, Map<EventType, Integer> eventContents) {
+    private static void putEventContent(EventType eventType, int discountAmount,
+                                        Map<EventType, Integer> eventContents) {
         if (discountAmount != 0) {
             eventContents.put(eventType, discountAmount);
         }
@@ -59,7 +60,7 @@ public class ResultService {
             return BadgeType.TREE;
         }
         if (isAmountForBadge(MIN_AMOUNT_FOR_STAR_BADGE, totalDiscountedAmount)) {
-           return BadgeType.STAR;
+            return BadgeType.STAR;
         }
         return null;
     }
@@ -67,5 +68,4 @@ public class ResultService {
     private static boolean isAmountForBadge(int amountForBadge, int totalDiscountedAmount) {
         return totalDiscountedAmount >= amountForBadge;
     }
-
 }
