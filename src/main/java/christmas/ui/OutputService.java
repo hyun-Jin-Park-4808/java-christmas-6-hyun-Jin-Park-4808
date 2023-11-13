@@ -53,10 +53,17 @@ public class OutputService {
             return;
         }
         for (Map.Entry<EventType, Integer> eventContent : eventContents.entrySet()) {
-            System.out.printf("%s:-%d원", eventContent.getKey().getEventName(), eventContent.getValue());
+            System.out.printf("%s:-%d원\n", eventContent.getKey().getEventName(), eventContent.getValue());
         }
     }
 
+    public static void printTotalDiscountedAmount(int totalDiscountedAmount) {
+        if (totalDiscountedAmount == 0) {
+            System.out.println("0원");
+            return;
+        }
+        System.out.printf("-%d원", totalDiscountedAmount);
+    }
 
 
 
