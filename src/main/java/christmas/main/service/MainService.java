@@ -60,12 +60,19 @@ public class MainService {
         if (!isWeekday(date)) {
             return 0;
         }
-        return getNumberOfDesserts(orders) * DISCOUNT_AMOUNT_PER_MENU;
+        return getNumberOfMenu(orders, MenuType.DESSERT) * DISCOUNT_AMOUNT_PER_MENU;
     }
 
-    private static int getNumberOfDesserts(Map<Menu, Integer> orders) {
+    public static int calculateDiscountAmountOfWeekendEvent(int date, Map<Menu, Integer> orders) {
+        if (isWeekday(date)) {
+            return 0;
+        }
+        return getNumberOfMenu(orders, MenuType.MAIN) * DISCOUNT_AMOUNT_PER_MENU;
+    }
+
+    private static int getNumberOfMenu(Map<Menu, Integer> orders, MenuType menuType) {
         return orders.entrySet().stream()
-                .filter(entry -> entry.getKey().isSameMenuType(MenuType.DESSERT))
+                .filter(entry -> entry.getKey().isSameMenuType(menuType))
                 .mapToInt(entry -> entry.getValue())
                 .sum();
     }
@@ -83,5 +90,4 @@ public class MainService {
     private static boolean isNotWeekday(int dayOfWeekNumber) {
         return dayOfWeekNumber >= FRIDATY_NUMBER && dayOfWeekNumber <= SATURDAY_NUMBER;
     }
-
 }
