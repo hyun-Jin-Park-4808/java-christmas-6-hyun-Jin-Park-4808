@@ -98,4 +98,32 @@ class ResultServiceTest {
         // then
         assertThat(eventContents).isEqualTo(null);
     }
+
+
+    @DisplayName("평일 할인과 특별 이벤트와 증정 이벤트가 적용된 총 할인 금액을 계산한다.")
+    @Test
+    void calculateTotalDiscountedAmount() {
+        // given
+        Map<Menu, Integer> orders = EventServiceTest.testOrders();
+        int totalPriceBeforeDiscount = EventService.calculateTotalPriceBeforeDiscount(orders);
+        int date = 3; // 일요일(평일), 특별 이벤트 적용 날짜
+        Map<EventType, Integer> eventContents
+                = ResultService.saveEventContents(totalPriceBeforeDiscount, date, orders);
+
+        int expectedResult = EventService.calculateDiscountAmountOfChristmasEvent(date)
+                + EventService.calculateDiscountAmountOfWeekdayEvent(date, orders)
+                + EventService.checkAvailabilityForGiveawayEvent(totalPriceBeforeDiscount)
+                + EventService.checkAvailabilityForSpecialEvent(date);
+
+        // when
+        int totalDiscountedAmount = ResultService.calculateTotalDiscountedAmount(eventContents);
+        // then
+        assertThat(totalDiscountedAmount).isEqualTo(expectedResult);
+    }
+
+    @DisplayName("혜택 내역이 없으면 0원을 반환한다.")
+    @Test
+    void calculateTotalDiscountedAmountByNull() {
+        assertThat(ResultService.calculateTotalDiscountedAmount(null)).isEqualTo(0);
+    }
 }
