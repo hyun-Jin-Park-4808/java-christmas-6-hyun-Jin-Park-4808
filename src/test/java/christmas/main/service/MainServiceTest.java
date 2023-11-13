@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.in;
 
 import christmas.menus.type.Menu;
+import christmas.menus.type.MenuType;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -156,4 +157,27 @@ class MainServiceTest {
         // when & then
         assertThat(MainService.checkAvailabilityForSpecialEvent(input)).isEqualTo(DISCOUNT_AMOUNT_OF_SPECIAL_EVENT);
     }
+
+    @DisplayName("할인 전 총주문 금액이 12만원 이상이 안 되면 증정 이벤트를 받지 못한다.")
+    @Test
+    void checkAvailabilityForGiveawayEventByLowerPrice() {
+        // given
+        int totalPriceBeforeDiscount = 100000;
+
+        // when & then
+        assertThat(MainService.checkAvailabilityForGiveawayEvent(totalPriceBeforeDiscount)).isEqualTo(0);
+    }
+
+    @DisplayName("할인 전 총주문 금액이 12만원 이상이면 샴페인에 해당하는 가격을 혜택으로 받는다.")
+    @Test
+    void checkAvailabilityForGiveawayEvent() {
+        // given
+        int totalPriceBeforeDiscount = 120000;
+
+        // when & then
+        assertThat(MainService.checkAvailabilityForGiveawayEvent(totalPriceBeforeDiscount))
+                .isEqualTo(Menu.CHAMPAGNE.getPrice());
+    }
+
+
 }
