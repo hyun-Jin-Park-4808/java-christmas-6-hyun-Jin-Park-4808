@@ -67,4 +67,5 @@ public class ResultService {
     private static boolean isAmountForBadge(int amountForBadge, int totalDiscountedAmount) {
         return totalDiscountedAmount >= amountForBadge;
     }
+
 }

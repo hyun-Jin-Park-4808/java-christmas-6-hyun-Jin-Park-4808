@@ -1,7 +1,11 @@
 package christmas.main.service;
 
+import static christmas.constants.Constant.MIN_AMOUNT_FOR_SANTA_BADGE;
+import static christmas.constants.Constant.MIN_AMOUNT_FOR_STAR_BADGE;
+import static christmas.constants.Constant.MIN_AMOUNT_FOR_TREE_BADGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.main.type.BadgeType;
 import christmas.main.type.EventType;
 import christmas.menus.type.Menu;
 import java.util.HashMap;
@@ -134,8 +138,50 @@ class ResultServiceTest {
         int totalPriceBeforeDiscount = 150000;
         int totalDiscountAmount = 5000;
         int expectedResult = totalPriceBeforeDiscount - totalDiscountAmount;
+
+        // when & then
         assertThat(ResultService
                 .calculateAmountOfPayment(totalPriceBeforeDiscount, totalDiscountAmount))
                 .isEqualTo(expectedResult);
+    }
+
+    @DisplayName("총혜택 금액이 2만원 이상이면 산타 배지를 받는다.")
+    @Test
+    void decideBadgeByMinAmountForSantaBadge() {
+        // given
+        int totalDiscountAmount = MIN_AMOUNT_FOR_SANTA_BADGE;
+
+        // when & then
+        assertThat(ResultService.decideBadge(totalDiscountAmount)).isEqualTo(BadgeType.SANTA);
+    }
+
+    @DisplayName("총혜택 금액이 1만원 이상 2만원 미만이면 트리 배지를 받는다.")
+    @Test
+    void decideBadgeByMinAmountForTreeBadge() {
+        // given
+        int totalDiscountAmount = MIN_AMOUNT_FOR_TREE_BADGE;
+
+        // when & then
+        assertThat(ResultService.decideBadge(totalDiscountAmount)).isEqualTo(BadgeType.TREE);
+    }
+
+    @DisplayName("총혜택 금액이 5천원 이상 1만원 미만이면 별 배지를 받는다.")
+    @Test
+    void decideBadgeByMinAmountForStarBadge() {
+        // given
+        int totalDiscountAmount = MIN_AMOUNT_FOR_STAR_BADGE;
+
+        // when & then
+        assertThat(ResultService.decideBadge(totalDiscountAmount)).isEqualTo(BadgeType.STAR);
+    }
+
+    @DisplayName("총혜택 금액이 5천원 미만이면 아무 배지도 못 받는다.")
+    @Test
+    void decideBadgeByLowerAmount() {
+        // given
+        int totalDiscountAmount = 4000;
+
+        // when & then
+        assertThat(ResultService.decideBadge(totalDiscountAmount)).isEqualTo(null);
     }
 }
