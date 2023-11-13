@@ -23,8 +23,12 @@ public class OutputService {
     public static void printOrders(Map<Menu, Integer> orders) {
         System.out.println("<주문 메뉴>");
         for (Map.Entry<Menu, Integer> order : orders.entrySet()) {
-            System.out.printf("%s %d개", order.getKey().getName(), order.getValue());
+            System.out.printf("%s %d개\n", order.getKey().getName(), order.getValue());
         }
+    }
+
+    public static void printTotalPriceBeforeDiscount(int totalPriceBeforeDiscount) {
+        System.out.printf("%d원\n", totalPriceBeforeDiscount);
     }
 
 
