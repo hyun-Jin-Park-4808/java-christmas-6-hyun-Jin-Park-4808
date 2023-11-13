@@ -1,13 +1,20 @@
 package christmas.main.service;
 
+import static christmas.constants.Constant.MIN_AMOUNT_FOR_SANTA_BADGE;
+import static christmas.constants.Constant.MIN_AMOUNT_FOR_STAR_BADGE;
+import static christmas.constants.Constant.MIN_AMOUNT_FOR_TREE_BADGE;
 import static christmas.main.service.EventService.*;
 
+import christmas.main.type.BadgeType;
 import christmas.main.type.EventType;
 import christmas.menus.type.Menu;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ResultService {
+
+
+
     public static Map<EventType, Integer> saveEventContents(
             int totalPriceBeforeDiscount, int date, Map<Menu, Integer> orders) {
         Map<EventType, Integer> eventContents = new HashMap<>();
@@ -42,5 +49,22 @@ public class ResultService {
 
     public static int calculateAmountOfPayment(int totalPriceBeforeDiscount, int totalDiscountedAmount) {
         return totalPriceBeforeDiscount - totalDiscountedAmount;
+    }
+
+    public static BadgeType decideBadge(int totalDiscountedAmount) {
+        if (isAmountForBadge(MIN_AMOUNT_FOR_SANTA_BADGE, totalDiscountedAmount)) {
+            return BadgeType.SANTA;
+        }
+        if (isAmountForBadge(MIN_AMOUNT_FOR_TREE_BADGE, totalDiscountedAmount)) {
+            return BadgeType.TREE;
+        }
+        if (isAmountForBadge(MIN_AMOUNT_FOR_STAR_BADGE, totalDiscountedAmount)) {
+           return BadgeType.STAR;
+        }
+        return null;
+    }
+
+    private static boolean isAmountForBadge(int amountForBadge, int totalDiscountedAmount) {
+        return totalDiscountedAmount >= amountForBadge;
     }
 }

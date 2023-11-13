@@ -17,4 +17,7 @@ public class Constant {
     public static final int DISCOUNT_AMOUNT_OF_SPECIAL_EVENT = 1000;
     public static final int MAX_NUMBER_OF_ORDER = 20;
     public static final int STANDARD_PRICE_FOR_GIVEAWAY_EVENT = 120000;
+    public static final int MIN_AMOUNT_FOR_SANTA_BADGE = 20000;
+    public static final int MIN_AMOUNT_FOR_TREE_BADGE = 10000;
+    public static final int MIN_AMOUNT_FOR_STAR_BADGE = 5000;
 }
