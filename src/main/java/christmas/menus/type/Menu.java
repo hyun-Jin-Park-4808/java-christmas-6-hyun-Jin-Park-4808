@@ -1,7 +1,8 @@
 package christmas.menus.type;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Menu {
     BUTTON_MUSHROOM_SOUP(MenuType.APPETIZER, "양송이수프", 6000),
@@ -36,37 +37,11 @@ public enum Menu {
     }
 
     public static List<String> namesOfMenus() {
-        List<String> namesOfMenus = new ArrayList<>();
-        namesOfMenus.add(BUTTON_MUSHROOM_SOUP.name);
-        namesOfMenus.add(TAPAS.name);
-        namesOfMenus.add(CAESAR_SALAD.name);
-        namesOfMenus.add(CHOCOLATE_CAKE.name);
-        namesOfMenus.add(ICE_CREAM.name);
-        namesOfMenus.add(ZERO_COKE.name);
-        namesOfMenus.add(RED_WINE.name);
-        namesOfMenus.add(CHAMPAGNE.name);
-        namesOfMenus.add(T_BONE_STEAK.name);
-        namesOfMenus.add(BARBECUE_RIBS.name);
-        namesOfMenus.add(SEAFOOD_PASTA.name);
-        namesOfMenus.add(CHRISTMAS_PASTA.name);
-        return namesOfMenus;
+        return Arrays.stream(Menu.values()).map(Menu::getName).collect(Collectors.toList());
     }
 
     public static List<Menu> menus() {
-        List<Menu> menus = new ArrayList<>();
-        menus.add(BUTTON_MUSHROOM_SOUP);
-        menus.add(TAPAS);
-        menus.add(CAESAR_SALAD);
-        menus.add(CHOCOLATE_CAKE);
-        menus.add(ICE_CREAM);
-        menus.add(ZERO_COKE);
-        menus.add(RED_WINE);
-        menus.add(CHAMPAGNE);
-        menus.add(T_BONE_STEAK);
-        menus.add(BARBECUE_RIBS);
-        menus.add(SEAFOOD_PASTA);
-        menus.add(CHRISTMAS_PASTA);
-        return menus;
+        return Arrays.stream(Menu.values()).collect(Collectors.toList());
     }
 
     public static Menu compareSameName(String name) {
@@ -84,5 +59,4 @@ public enum Menu {
         }
         return false;
     }
-
 }
